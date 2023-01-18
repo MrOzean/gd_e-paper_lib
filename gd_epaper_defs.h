@@ -1,8 +1,7 @@
-#pragma once
+#ifndef _GD_EPAPER_DEFS_H_
+#define _GD_EPAPER_DEFS_H_
 
 #include <stdint.h>
-
-#define GD_EPAPER_USE_HARDWARE_SPI
 
 #ifndef GD_EPAPER_USE_HARDWARE_SPI // use hardware SPI  instead software implementation
 #define GD_EPAPER_USE_SOFTWARE_SPI
@@ -151,3 +150,5 @@ typedef struct
 
     // SemaphoreHandle_t ready_sem; ///< Semaphore for ready signal
 } gd_epaper_display_dev;
+
+#endif

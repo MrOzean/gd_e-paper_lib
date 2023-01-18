@@ -1,10 +1,11 @@
-#pragma once
+#ifndef _GD_EPAPER_H_
+#define _GD_EPAPER_H_
 
 #include <stddef.h>
 #include <stdint.h>
 #include <stdbool.h>
 
-#include "gd_epaper_defs.h"
+#include "./gd_epaper_defs.h"
 
 /*!
  * @brief Bus communication function pointer which should be mapped to
@@ -70,3 +71,5 @@ void gd_epaper_move_cursor(gd_epaper_display_dev *display, uint16_t x, uint16_t 
  *
  */
 void gd_epaper_write_string(gd_epaper_display_dev *display, char *str, gd_epaper_color color);
+
+#endif
