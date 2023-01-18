@@ -140,7 +140,7 @@ typedef struct
     /* User defined hardware GPIO write, required */
     gd_epaper_write_gpio_fptr_t gpio_write_fptr;
     /* User defined microseconds delay function, required */
-    gd_epaper_delay_us_fptr_t delay_ms_fptr;
+    gd_epaper_delay_us_fptr_t delay_us_fptr;
     /* BUSY pin */
     int busy_pin;
     /* RESET pin */
