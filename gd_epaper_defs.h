@@ -1,5 +1,5 @@
 /*!
- * Defines for GooDisplay e-paper screens based on UC8179 ic driver 
+ * Defines for GooDisplay e-paper screens based on UC8179 ic driver
  */
 
 #ifndef _GD_EPAPER_DEFS_H_
@@ -15,10 +15,10 @@
 #define GD_EPAPER_USE_4_WIRE_SPI
 #endif
 
-//#define GDEY075T7 // 7.5 inch e-ink screen 3s/frame electronic paper display, GDEY075T7
-                    // This is a 7.5 inch e-ink screen with 800x480 resolution, UC8179 IC, SPI interface
-                    // and the electronic paper display supports 4 grayscale.
-                    // manufacturer link: https://www.good-display.com/product/396.html
+#define GDEY075T7 // 7.5 inch e-ink screen 3s/frame electronic paper display, GDEY075T7
+                  // This is a 7.5 inch e-ink screen with 800x480 resolution, UC8179 IC, SPI interface
+                  // and the electronic paper display supports 4 grayscale.
+                  // manufacturer link: https://www.good-display.com/product/396.html
 
 #ifdef GDEY075T7
 
