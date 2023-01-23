@@ -12,7 +12,7 @@
 #include "./gd_epaper_defs.h"
 
 /*!
- * @brief Full refresh display function (draw uploaded screen buffer)
+ * @brief Full refresh display function (draw uploaded screen buffer), and send deep sleep command
  *
  * @param[in] display          : Display device pointer
  *                            
