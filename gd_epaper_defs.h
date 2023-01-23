@@ -7,13 +7,11 @@
 
 #include <stdint.h>
 
-#define GD_EPAPER_USE_HARDWARE_SPI
+// set one of this
+#define GD_EPAPER_USE_HARDWARE_SPI // use hardware SPI  instead software implementation
+//#define GD_EPAPER_USE_SOFTWARE_SPI // use software SPI  
 
-#ifndef GD_EPAPER_USE_HARDWARE_SPI // use hardware SPI  instead software implementation
-#define GD_EPAPER_USE_SOFTWARE_SPI
-#endif
-
-#ifndef GD_EPAPER_USE_3_WIRE_SPI // does not work with supplied hat adapter (i really tried)
+#ifndef GD_EPAPER_USE_3_WIRE_SPI // don't work with supplied hat adapter (i really tried)
 #define GD_EPAPER_USE_4_WIRE_SPI
 #endif
 
