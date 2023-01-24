@@ -1,6 +1,5 @@
-// Hardware based example implementation on ESP32-C3 chip
+// Software based example implementation on ESP32-C3 chip
 #include "esp_log.h"
-#include "driver/spi_master.h"
 #include "driver/gpio.h"
 
 #include "freertos/FreeRTOS.h"
@@ -28,7 +27,6 @@
 // display
 uint8_t buff[GD_EPAPER_SCREEN_BUFFER_SIZE]; // screen buffer
 gd_epaper_display_dev display_dev = {};     // display handler
-spi_device_handle_t display_spi;            // esp-idf specific device spi handler
 
 // digital gpio read function, must be defined using platform specific functions
 gd_epaper_gpio_value gpio_read(uint8_t gpio)
@@ -43,7 +41,7 @@ void gpio_write(uint8_t gpio, gd_epaper_gpio_value value)
 //  milliseconds delay function, must be defined using platform specific functions
 void delay_us(uint32_t period)
 {
-    vTaskDelay(period / portTICK_PERIOD_MS); // good option to use FreeRTOS delay
+    vTaskDelay(period / portTICK_PERIOD_MS); // good option to use FreeRTOS delay or something like delay() from arduino
 }
 
 
