@@ -7,9 +7,13 @@
 
 #include <stdint.h>
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
 // set one of this
 #define GD_EPAPER_USE_HARDWARE_SPI // use hardware SPI  instead software implementation
-//#define GD_EPAPER_USE_SOFTWARE_SPI // use software SPI  
+    // #define GD_EPAPER_USE_SOFTWARE_SPI // use software SPI
 
 #ifndef GD_EPAPER_USE_3_WIRE_SPI // don't work with supplied hat adapter (i really tried)
 #define GD_EPAPER_USE_4_WIRE_SPI
@@ -58,103 +62,106 @@
 
 #define GD_EPAPER_DISPLAY_WAIT 0x71
 
-/*!
- * @brief Screen supported colors
- */
-typedef enum
-{
-    GD_EPAPER_WHITE = 0x00,
-    GD_EPAPER_BLACK = 0xFF,
-} gd_epaper_color;
+    /*!
+     * @brief Screen supported colors
+     */
+    typedef enum
+    {
+        GD_EPAPER_WHITE = 0x00,
+        GD_EPAPER_BLACK = 0xFF,
+    } gd_epaper_color;
 
 #endif
 
-/*!
- * @brief UC8179 pins levels
- */
-typedef enum
-{
-    GD_EPAPER_GPIO_LOW = 0x0,
-    GD_EPAPER_GPIO_HIGH = 0x1
-} gd_epaper_gpio_value;
+    /*!
+     * @brief UC8179 pins levels
+     */
+    typedef enum
+    {
+        GD_EPAPER_GPIO_LOW = 0x0,
+        GD_EPAPER_GPIO_HIGH = 0x1
+    } gd_epaper_gpio_value;
 
-/*!
- * @brief Bus communication function pointer which should be mapped to
- * the platform specific SPI write function
- * !!! REQUIRED if GD_EPAPER_USE_HARDWARE_SPI defined
- *
- * @param[in] data          : Pointer to data buffer in which data to be written
- *                            is stored.
- * @param[in] len           : Number of bytes of data to be written.
- *
- * @retval 0                -> Success.
- * @retval Non zero value   -> Fail.
- *
- */
-typedef int8_t (*gd_epaper_spi_write_fptr_t)(uint8_t *data, size_t len);
+    /*!
+     * @brief Bus communication function pointer which should be mapped to
+     * the platform specific SPI write function
+     * !!! REQUIRED if GD_EPAPER_USE_HARDWARE_SPI defined
+     *
+     * @param[in] data          : Pointer to data buffer in which data to be written
+     *                            is stored.
+     * @param[in] len           : Number of bytes of data to be written.
+     *
+     * @retval 0                -> Success.
+     * @retval Non zero value   -> Fail.
+     *
+     */
+    typedef int8_t (*gd_epaper_spi_write_fptr_t)(uint8_t *data, size_t len);
 
-/*!
- * @brief GPIO write function pointer which should be mapped to
- * the platform specific GPIO write function
- * !!! REQUIRED
- *
- * @param[in] gpio          : Any digital preconfigured GPIO
- * @param[in] value         : GPIO value
- * @param[in, out] intf_ptr : Void pointer that can enable the linking of descriptors
- *                            for interface related call backs
- *
- */
-typedef void (*gd_epaper_write_gpio_fptr_t)(uint8_t gpio, gd_epaper_gpio_value value);
+    /*!
+     * @brief GPIO write function pointer which should be mapped to
+     * the platform specific GPIO write function
+     * !!! REQUIRED
+     *
+     * @param[in] gpio          : Any digital preconfigured GPIO
+     * @param[in] value         : GPIO value
+     * @param[in, out] intf_ptr : Void pointer that can enable the linking of descriptors
+     *                            for interface related call backs
+     *
+     */
+    typedef void (*gd_epaper_write_gpio_fptr_t)(uint8_t gpio, gd_epaper_gpio_value value);
 
-/*!
- * @brief GPIO read function pointer which should be mapped to
- * the platform specific GPIO read function
- * !!! REQUIRED
- *
- * @param[in] gpio          : Any digital preconfigured GPIO
- *
- * @retval GPIO value (GD_EPAPER_GPIO_LOW or GD_EPAPER_GPIO_HIGH)
- *
- */
-typedef gd_epaper_gpio_value (*gd_epaper_read_gpio_fptr_t)(uint8_t gpio);
+    /*!
+     * @brief GPIO read function pointer which should be mapped to
+     * the platform specific GPIO read function
+     * !!! REQUIRED
+     *
+     * @param[in] gpio          : Any digital preconfigured GPIO
+     *
+     * @retval GPIO value (GD_EPAPER_GPIO_LOW or GD_EPAPER_GPIO_HIGH)
+     *
+     */
+    typedef gd_epaper_gpio_value (*gd_epaper_read_gpio_fptr_t)(uint8_t gpio);
 
-/*!
- * @brief Delay function pointer which should be mapped to
- * delay platform/RTOS specific function
- * !!! REQUIRED
- *
- * @param[in] period              : Delay in microseconds.
- *
- */
-typedef void (*gd_epaper_delay_us_fptr_t)(uint32_t period);
+    /*!
+     * @brief Delay function pointer which should be mapped to
+     * delay platform/RTOS specific function
+     * !!! REQUIRED
+     *
+     * @param[in] period              : Delay in microseconds.
+     *
+     */
+    typedef void (*gd_epaper_delay_us_fptr_t)(uint32_t period);
 
-/*!
- * @brief E-paper display device
- */
-typedef struct
-{
-    /* User defined hardware  SPI write function pointer, required if hardware SPI enabled */
-    gd_epaper_spi_write_fptr_t spi_write_fptr;
-    /* User defined hardware  GPIO read, required */
-    gd_epaper_read_gpio_fptr_t gpio_read_fptr;
-    /* User defined hardware GPIO write, required */
-    gd_epaper_write_gpio_fptr_t gpio_write_fptr;
-    /* User defined microseconds delay function, required */
-    gd_epaper_delay_us_fptr_t delay_us_fptr;
-    /* BUSY pin */
-    int busy_pin;
-    /* RESET pin */
-    int reset_pin;
-    /* D/C pin */
-    int dc_pin;
-    /* RESET pin, required if software SPI enabled */
-    int mosi_pin;
-    /* RESET pin, required if softwareSPI enabled */
-    int clk_pin;
-    /* CS pin, required if software SPI enabled*/
-    int cs_pin;
-    /* Screen buffer ptr */
-    uint8_t *screen_buffer;
-} gd_epaper_display_dev;
+    /*!
+     * @brief E-paper display device
+     */
+    typedef struct
+    {
+        /* User defined hardware  SPI write function pointer, required if hardware SPI enabled */
+        gd_epaper_spi_write_fptr_t spi_write_fptr;
+        /* User defined hardware  GPIO read, required */
+        gd_epaper_read_gpio_fptr_t gpio_read_fptr;
+        /* User defined hardware GPIO write, required */
+        gd_epaper_write_gpio_fptr_t gpio_write_fptr;
+        /* User defined microseconds delay function, required */
+        gd_epaper_delay_us_fptr_t delay_us_fptr;
+        /* BUSY pin */
+        int busy_pin;
+        /* RESET pin */
+        int reset_pin;
+        /* D/C pin */
+        int dc_pin;
+        /* RESET pin, required if software SPI enabled */
+        int mosi_pin;
+        /* RESET pin, required if softwareSPI enabled */
+        int clk_pin;
+        /* CS pin, required if software SPI enabled*/
+        int cs_pin;
+        /* Screen buffer ptr */
+        uint8_t *screen_buffer;
+    } gd_epaper_display_dev;
 
+#ifdef __cplusplus
+}
+#endif
 #endif
