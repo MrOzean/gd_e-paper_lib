@@ -15,9 +15,32 @@
 extern "C"
 {
 #endif
-
     /*!
-     * @brief Full refresh display function (draw uploaded screen buffer), and send display to deep sleep
+     * @brief Function to wakeup and init display
+     *
+     * @param[in] display          : Display device pointer
+     */
+    void send_init(gd_epaper_display_dev *display);
+    /*!
+     * @brief Function to send display refresh command
+     *
+     * @param[in] display          : Display device pointer
+     */
+    void send_refresh(gd_epaper_display_dev *display);
+    /*!
+     * @brief Function to send deep sleep command
+     *
+     * @param[in] display          : Display device pointer
+     */
+    void send_sleep(gd_epaper_display_dev *display);
+    /*!
+     * @brief Function to send buffer to display
+     *
+     * @param[in] display          : Display device pointer
+     */
+    void send_buffer(gd_epaper_display_dev *display);
+    /*!
+     * @brief Full refresh display function. Init display, send and draw screen buffer, and send display to deep sleep
      *
      * @param[in] display          : Display device pointer
      *

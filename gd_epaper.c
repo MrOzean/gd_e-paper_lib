@@ -111,12 +111,8 @@ static void wait_display(gd_epaper_display_dev *display)
     display->delay_us_fptr(200); // minimum 100 us
 }
 #ifdef GDEY075T7
-/*!
- * @brief Internal function to wakeup and init display
- *
- * @param[in] display          : Display device pointer
- */
-static void send_init(gd_epaper_display_dev *display)
+
+void send_init(gd_epaper_display_dev *display)
 {
 
     display->gpio_write_fptr(display->reset_pin, GD_EPAPER_GPIO_LOW);  //  IC reset
@@ -152,23 +148,15 @@ static void send_init(gd_epaper_display_dev *display)
     write_command(display, GD_EPAPER_TCON_1); // TCON SETTING
     write_data(display, GD_EPAPER_TCON_2);
 }
-/*!
- * @brief Internal function to send display refresh command
- *
- * @param[in] display          : Display device pointer
- */
-static void send_refresh(gd_epaper_display_dev *display)
+
+void send_refresh(gd_epaper_display_dev *display)
 {
     write_command(display, GD_EPAPER_DISPLAY_REFRESH); // send refresh
     display->delay_us_fptr(20);                        //!!! The delay here is necessary, 20uS at least!!!
     wait_display(display);                             //  wait until drawing
 }
-/*!
- * @brief Internal function to send deep sleep command
- *
- * @param[in] display          : Display device pointer
- */
-static void send_sleep(gd_epaper_display_dev *display)
+
+void send_sleep(gd_epaper_display_dev *display)
 {
     write_command(display, 0x50);
     write_data(display, 0xF7);
@@ -178,12 +166,9 @@ static void send_sleep(gd_epaper_display_dev *display)
     write_command(display, 0x07); // deep sleep
     write_data(display, 0xA5);
 }
-#endif
 
-void gd_epaper_update_screen(gd_epaper_display_dev *display)
+void send_buffer(gd_epaper_display_dev *display)
 {
-    send_init(display);
-
     size_t i;
     write_command(display, 0x10); // Transfer old data
     for (i = 0; i < GD_EPAPER_SCREEN_BUFFER_SIZE; i++)
@@ -196,7 +181,16 @@ void gd_epaper_update_screen(gd_epaper_display_dev *display)
     {
         write_data(display, display->screen_buffer[i]);
     }
+}
+
+void gd_epaper_update_screen(gd_epaper_display_dev *display)
+{
+    send_init(display);
+    send_buffer(display);
 
     send_refresh(display);
     send_sleep(display);
 }
+#endif
+
+
