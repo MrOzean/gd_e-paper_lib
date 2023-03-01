@@ -112,7 +112,7 @@ static void wait_display(gd_epaper_display_dev *display)
 }
 #ifdef GDEY075T7
 
-void send_init(gd_epaper_display_dev *display)
+void gd_epaper_send_init(gd_epaper_display_dev *display)
 {
 
     display->gpio_write_fptr(display->reset_pin, GD_EPAPER_GPIO_LOW);  //  IC reset
@@ -149,14 +149,14 @@ void send_init(gd_epaper_display_dev *display)
     write_data(display, GD_EPAPER_TCON_2);
 }
 
-void send_refresh(gd_epaper_display_dev *display)
+void gd_epaper_send_refresh(gd_epaper_display_dev *display)
 {
     write_command(display, GD_EPAPER_DISPLAY_REFRESH); // send refresh
     display->delay_us_fptr(20);                        //!!! The delay here is necessary, 20uS at least!!!
     wait_display(display);                             //  wait until drawing
 }
 
-void send_sleep(gd_epaper_display_dev *display)
+void gd_epaper_send_sleep(gd_epaper_display_dev *display)
 {
     write_command(display, 0x50);
     write_data(display, 0xF7);
@@ -167,7 +167,7 @@ void send_sleep(gd_epaper_display_dev *display)
     write_data(display, 0xA5);
 }
 
-void send_buffer(gd_epaper_display_dev *display)
+void gd_epaper_send_buffer(gd_epaper_display_dev *display)
 {
     size_t i;
     write_command(display, 0x10); // Transfer old data
@@ -186,10 +186,10 @@ void send_buffer(gd_epaper_display_dev *display)
 
 void gd_epaper_update_screen(gd_epaper_display_dev *display)
 {
-    send_init(display);
-    send_buffer(display);
+    gd_epaper_send_init(display);
+    gd_epaper_send_buffer(display);
 
-    send_refresh(display);
-    send_sleep(display);
+    gd_epaper_send_refresh(display);
+    gd_epaper_send_sleep(display);
 }
 #endif

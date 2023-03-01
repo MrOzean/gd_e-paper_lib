@@ -20,25 +20,25 @@ extern "C"
      *
      * @param[in] display          : Display device pointer
      */
-    void send_init(gd_epaper_display_dev *display);
+    void gd_epaper_send_init(gd_epaper_display_dev *display);
     /*!
      * @brief Function to send display refresh command
      *
      * @param[in] display          : Display device pointer
      */
-    void send_refresh(gd_epaper_display_dev *display);
+    void gd_epaper_send_refresh(gd_epaper_display_dev *display);
     /*!
      * @brief Function to send deep sleep command
      *
      * @param[in] display          : Display device pointer
      */
-    void send_sleep(gd_epaper_display_dev *display);
+    void gd_epaper_send_sleep(gd_epaper_display_dev *display);
     /*!
      * @brief Function to send buffer to display
      *
      * @param[in] display          : Display device pointer
      */
-    void send_buffer(gd_epaper_display_dev *display);
+    void gd_epaper_send_buffer(gd_epaper_display_dev *display);
     /*!
      * @brief Full refresh display function. Init display, send and draw screen buffer, and send display to deep sleep
      *
