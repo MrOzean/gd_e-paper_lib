@@ -181,6 +181,7 @@ void send_buffer(gd_epaper_display_dev *display)
     {
         write_data(display, display->screen_buffer[i]);
     }
+    wait_display(display); // wait until execute
 }
 
 void gd_epaper_update_screen(gd_epaper_display_dev *display)
@@ -192,5 +193,3 @@ void gd_epaper_update_screen(gd_epaper_display_dev *display)
     send_sleep(display);
 }
 #endif
-
-
